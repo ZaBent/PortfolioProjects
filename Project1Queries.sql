@@ -146,3 +146,27 @@ Where dea.continent is not null
 
 Select *
 From PercentPopVaxView
+
+-- Creating two more views
+
+Create View DeathvsPopCountries as
+Select Location, Population, max(cast(total_deaths as int)) as MaxDeath
+From PortfolioProject..CovidDeaths
+Where continent is not null
+--and Location NOT LIKE 'North Korea'
+Group By Location, Population
+Order by MaxDeath Desc
+
+Select *
+From DeathvsPopCountries
+
+
+Create View DeathvsPopContinents as
+Select Continent, max(cast(total_deaths as int)) as MaxDeath
+From PortfolioProject..CovidDeaths
+Where continent is not null
+Group By continent
+Order by MaxDeath Desc
+
+Select *
+From DeathvsPopContinents
